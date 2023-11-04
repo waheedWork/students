@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:students/core/class/handelingview.dart';
 
+import '../../../../../controller/auth_controllers/teacher/allStudentsBayController.dart';
 import '../../../../../controller/auth_controllers/teacher/studentDataController.dart';
 
 class StudentDataPage extends StatelessWidget {
@@ -10,7 +11,7 @@ class StudentDataPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StudentDataController studentDataController = Get.find();
+    AllStudentsBayController studentsController = Get.put(AllStudentsBayController());
     return Scaffold(
       appBar: AppBar(title: const Text('student').tr()),
       body: Center(
@@ -58,6 +59,7 @@ class StudentDataPage extends StatelessWidget {
                     ),
                   ),
                   Expanded(child: Container()),
+
                   Container(
                     color: Get.theme.primaryColor.withOpacity(0.5),
                     child: Padding(
@@ -65,9 +67,12 @@ class StudentDataPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(controller.studentModel.studentBornDate
-                              .toString()),
-                          Text(controller.studentModel.studentType.toString()),
+                          Text(
+                            controller.studentModel.studentBornDate.toString(),
+                          ),
+                          Text(
+                            controller.studentModel.studentType.toString(),
+                          ),
                         ],
                       ),
                     ),

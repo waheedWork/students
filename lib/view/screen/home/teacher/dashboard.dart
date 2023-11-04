@@ -60,7 +60,7 @@ class TeacherDashboard extends StatelessWidget {
             minVerticalPadding: 10,
             title: Text(
               teacherController.teacherLessonsList[index].lessonDay.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: SizedBox(
               width: Get.width / 5,
@@ -69,9 +69,24 @@ class TeacherDashboard extends StatelessWidget {
                     .toString(),
               ),
             ),
-            trailing: Text(
-              teacherController.teacherLessonsList[index].lessonTime.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold),
+            trailing: Column(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  teacherController.teacherLessonsList[index].lessonTime
+                      .toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  teacherController.teacherLessonsList[index].lessonDate
+                      .toString()
+                      .replaceRange(
+                        10,
+                        19,
+                        '',
+                      ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
         ),

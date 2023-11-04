@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart';
+import 'package:students/controller/auth_controllers/teacher/studentsController.dart';
 import 'package:students/core/class/statusrequest.dart';
+import 'package:students/core/constant/approutes.dart';
 import 'package:students/data/datasource/remote/student/getStudent.dart';
 import 'package:students/data/model/bayModel.dart';
 import 'package:students/data/model/student_model.dart';
@@ -29,7 +31,8 @@ class StudentDataController extends GetxController {
     statusRequest = StatusRequest.loading;
     update();
     try {
-      var response = await studentData.getStudentData(studentId: studentModelId);
+      var response =
+          await studentData.getStudentData(studentId: studentModelId);
       statusRequest = handlingData(response);
       print(response);
       if (statusRequest == StatusRequest.success) {
@@ -47,11 +50,10 @@ class StudentDataController extends GetxController {
     update();
   }
 
-
   Future<void> getStudentBay(String studentId) async {
     statusRequest = StatusRequest.loading;
     update();
-    studentModelId=studentId;
+    studentModelId = studentId;
     bayModelList.clear();
     try {
       var response = await studentData.getStudentBay(studentId: studentModelId);
@@ -87,5 +89,14 @@ class StudentDataController extends GetxController {
     }
 
     update();
+  }
+
+  void toEditeStudent() async {
+    StudentsController studentsController = Get.put(StudentsController());
+    studentsController.toRegisterStudent('update');
+
+ await   getStudentData(studentModelId);
+    studentsController.setValues(studentModel);
+    // Get.to(AppRoute.registerPage);
   }
 }

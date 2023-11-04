@@ -6,6 +6,7 @@ import 'package:students/controller/auth_controllers/teacher/studentDataControll
 import 'package:students/controller/auth_controllers/teacher/teacherController.dart';
 import 'package:students/core/class/handelingview.dart';
 
+
 class StudentBayPage extends StatelessWidget {
   const StudentBayPage({Key? key}) : super(key: key);
 
@@ -23,8 +24,8 @@ class StudentBayPage extends StatelessWidget {
           ? const Text(
               'bayDone',
               style: TextStyle(
-                color: Colors.green,
-                fontSize: 33,
+                color: Colors.green,fontWeight: FontWeight.bold,
+                fontSize: 21,
               ),
             ).tr()
           : Text(
@@ -32,8 +33,8 @@ class StudentBayPage extends StatelessWidget {
                     controller.bayModelList.first.studentBay.toString(),
                   ) - controller.sum}',
               style: const TextStyle(
-                color: Colors.red,
-                fontSize: 22,
+                color: Colors.red,fontWeight: FontWeight.bold,
+                fontSize: 21,
               ),
             );
     }
@@ -57,12 +58,39 @@ class StudentBayPage extends StatelessWidget {
       return ListView.builder(
         itemCount: controller.bayModelList.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              controller.bayModelList[index].quantity.toString(),
-            ),
-            trailing: Text(
-              controller.bayModelList[index].bayDate.toString(),
+          return InkWell(
+            onLongPress: () {
+              print(controller.bayModelList[index].bayId.toString());
+              Get.defaultDialog(
+                  title: tr('delete'),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          await
+                          allStudentsBayController.deleteBay(
+                              controller.bayModelList[index].bayId.toString()
+                          );
+                        },
+                        child: const Text('ok').tr(),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: const Text('back').tr(),
+                      ),
+                    ],
+                  ));
+            },
+            child: ListTile(
+              title: Text(
+                controller.bayModelList[index].quantity.toString(),
+              ),
+              trailing: Text(
+                controller.bayModelList[index].bayDate.toString(),
+              ),
             ),
           );
         },
@@ -79,7 +107,26 @@ class StudentBayPage extends StatelessWidget {
               },
               child: const Icon(Icons.add),
             ),
-      appBar: AppBar(title: const Text('bay').tr()),
+      appBar: AppBar(
+        title: const Text('bay').tr(),
+
+          actions: [
+            IconButton(
+              onPressed: () {
+                if(teacherController.teacherModel.teacherId=='9'){
+                  controller.toEditeStudent();
+
+                }else{
+                  Get.snackbar('خطأ', 'فقط المشرف');
+                }
+              },
+              icon: Icon(
+                Icons.edit,
+                color: Get.theme.primaryColor,
+              ),
+            )
+          ],
+      ),
       body: Center(
         child: GetBuilder<StudentDataController>(
           builder: (controller) {

@@ -15,13 +15,6 @@ class RegisterStudentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StudentsController studentsController = Get.find();
-    // nameTextController = TextEditingController();
-    // passwordTextController = TextEditingController();
-    // phoneTextController = TextEditingController();
-    // parentTextController = TextEditingController();
-    // parentPhoneTextController = TextEditingController();
-    // typeTextController = TextEditingController();
-    // pornDateTextController = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: const Text('add_student').tr()),
       body: Center(child: GetBuilder<StudentsController>(
@@ -72,8 +65,7 @@ class RegisterStudentPage extends StatelessWidget {
                                 selectedDate: DateTime(
                                   int.parse(
                                     studentsController
-                                        .pornDateTextController.text
-                                        .toString(),
+                                        .pornDateTextController.text,
                                   ),
                                 ),
                                 onChanged: (value) {
@@ -127,7 +119,7 @@ class RegisterStudentPage extends StatelessWidget {
                           iconData: Icons.password,
                           inputType: TextInputType.number,
                           onChanged: (p0) {},
-                          obscureText: true,
+                          obscureText: false,
                           validator: (p0) {
                             return validInput(p0!, 8, 30, 'password');
                           },
@@ -175,8 +167,7 @@ class RegisterStudentPage extends StatelessWidget {
                           validator: (p0) {
                             return validInput(p0!, 1, 30, 'password');
                           },
-                          textFieldController:
-                              studentsController.bayController,
+                          textFieldController: studentsController.bayController,
                         ),
                       ],
                     ),
@@ -185,10 +176,15 @@ class RegisterStudentPage extends StatelessWidget {
                 GetBuilder<StudentsController>(builder: (controller) {
                   return HandelingRequest(
                     statusRequest: controller.statusRequest!,
-                    widget: AppSignUpAndLoginButton(
+                    widget: studentsController.isRegister? AppSignUpAndLoginButton(
                       text: tr('add'),
                       onPressed: () async {
                         await studentsController.registerStudent();
+                      },
+                    ): AppSignUpAndLoginButton(
+                      text: tr('update'),
+                      onPressed: () async {
+                        await studentsController.updateStudent();
                       },
                     ),
                   );

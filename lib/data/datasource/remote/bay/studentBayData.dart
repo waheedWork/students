@@ -19,4 +19,15 @@ class StudentBayData {
     );
     return response.fold((l) => l, (r) => r);
   }
+  studentDeleteBayData({
+    required String bayId,
+  }) async {
+    var response = await crud.postData(
+      AppLinks.bayDeleteStudentLink,
+      {
+        'bay_id': bayId,
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
 }

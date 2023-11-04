@@ -16,55 +16,88 @@ class StudentLessonsPage extends StatelessWidget {
       return Column(
         children: [
           const Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                '${tr('lesson')} ${index + 1}',
-              ),
-              Text(
-                studentLessonsController.studentLessonsList[index].stdLesDate
-                    .toString(),
-              ),
-            ],
-          ),
-          ListTile(
-            // leading: ,
-            title: Text(
-              '${tr('level')} : ${studentLessonsController.studentLessonsList[index].level}',
+          InkWell(
+            onLongPress: () async {
+              Get.defaultDialog(
+                  title: tr('delete'),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          await studentLessonsController.deleteStudentLesson(
+                              studentLessonsController
+                                  .studentLessonsList[index].id
+                                  .toString());
+                        },
+                        child: const Text('ok').tr(),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: const Text('back').tr(),
+                      ),
+                    ],
+                  ));
+              print(studentLessonsController.studentLessonsList[index].id);
+            },
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      '${tr('lesson')} ${index + 1}',
+                    ),
+                    Text(
+                      studentLessonsController
+                          .studentLessonsList[index].stdLesDate
+                          .toString(),
+                    ),
+                  ],
+                ),
+                ListTile(
+                  // leading: ,
+                  title: Text(
+                    '${tr('level')} : ${studentLessonsController.studentLessonsList[index].level}',
+                  ),
+                  subtitle: Text(
+                    '${tr('note')} : ${studentLessonsController.studentLessonsList[index].studentLessonNote}',
+                  ),
+                  trailing: studentLessonsController
+                              .studentLessonsList[index].late
+                              .toString() ==
+                          ''
+                      ? null
+                      : Text(
+                          '${tr("late")}  ${studentLessonsController.studentLessonsList[index].late} ${tr("minute")} ',
+                        ),
+                ),
+                studentLessonsController.studentLessonsList[index].test != ''
+                    ? Container(
+                        color: Colors.greenAccent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                              '${tr("exam_mark")}  ${studentLessonsController.studentLessonsList[index].test}'),
+                        ),
+                      )
+                    : Container(),
+                studentLessonsController
+                            .studentLessonsList[index].studentLessonIsCome ==
+                        '0'
+                    ? Container(
+                        color: Colors.redAccent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(tr("isNotCome")),
+                        ),
+                      )
+                    : Container(),
+              ],
             ),
-            subtitle: Text(
-              '${tr('note')} : ${studentLessonsController.studentLessonsList[index].studentLessonNote}',
-            ),
-            trailing: studentLessonsController.studentLessonsList[index].late
-                        .toString() ==
-                    ''
-                ? null
-                : Text(
-                    '${tr("late")}  ${studentLessonsController.studentLessonsList[index].late} ${tr("minute")} ',
-                  ),
           ),
-          studentLessonsController.studentLessonsList[index].test != ''
-              ? Container(
-                  color: Colors.greenAccent,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '${tr("exam_mark")}  ${studentLessonsController.studentLessonsList[index].test}'),
-                  ),
-                )
-              : Container(),
-          studentLessonsController
-                      .studentLessonsList[index].studentLessonIsCome ==
-                  '0'
-              ? Container(
-                  color: Colors.redAccent,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(tr("isNotCome")),
-                  ),
-                )
-              : Container(),
         ],
       );
     }

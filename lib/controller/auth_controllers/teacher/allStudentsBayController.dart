@@ -58,6 +58,7 @@ class AllStudentsBayController extends GetxController {
 
   void addStudentBay(context) {
     TextEditingController quantityController = TextEditingController(text: '');
+
     Get.defaultDialog(
       title: tr('bay'),
       content: SizedBox(
@@ -105,7 +106,7 @@ class AllStudentsBayController extends GetxController {
         print(response);
         if (statusRequest == StatusRequest.success) {
           if (response['status'] == 'success') {
-            Get.snackbar(tr('successful'), "");
+            Get.snackbar(tr('successful'), "",);
             StudentDataController studentDataController =
                 Get.put(StudentDataController());
             await studentDataController.getStudentBay(studentId);
@@ -120,5 +121,34 @@ class AllStudentsBayController extends GetxController {
       statusRequest = StatusRequest.success;
       update();
     }
+  }
+
+  deleteBay(String bayId) async {
+    Get.back();
+    statusRequest = StatusRequest.loading;
+    update();
+    try {
+      var response = await studentBayData.studentDeleteBayData(
+        bayId: bayId
+      );
+
+      statusRequest = handlingData(response);
+      print(response);
+      if (statusRequest == StatusRequest.success) {
+        if (response['status'] == 'success') {
+          Get.snackbar(tr('successfulDelete'), "");
+          StudentDataController studentDataController =
+          Get.put(StudentDataController());
+          await studentDataController.getStudentBay(studentId);
+        }
+      } else {
+        Get.snackbar(tr('connectionError'), "");
+      }
+    } catch (e) {
+      print('getTeacherLessons catch $e');
+    }
+
+    statusRequest = StatusRequest.success;
+    update();
   }
 }

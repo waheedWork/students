@@ -85,4 +85,16 @@ class StudentLessonsData {
     );
     return response.fold((l) => l, (r) => r);
   }
+  deleteStudentLessonData({
+    required String id,
+  }) async {
+    var response = await crud.postData(
+      AppLinks.deleteStudentLessonLink,
+      {
+        'student_lesson_id': id,
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
+
 }

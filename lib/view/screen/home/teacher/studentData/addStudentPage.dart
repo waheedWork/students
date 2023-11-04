@@ -60,7 +60,7 @@ class AddStudentPage extends StatelessWidget {
         return Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              studentsController.toRegisterStudent();
+              studentsController.toRegisterStudent('add');
             },
             child: const Icon(Icons.add),
           ),

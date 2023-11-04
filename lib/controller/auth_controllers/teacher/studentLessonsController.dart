@@ -177,4 +177,35 @@ class StudentLessonsController extends GetxController {
     statusRequest = StatusRequest.success;
     update();
   }
+
+
+
+  deleteStudentLesson(String id) async {
+    Get.back();
+    statusRequest = StatusRequest.loading;
+    update();
+    try {
+      var response = await studentLessonsData.deleteStudentLessonData(
+          id: id
+      );
+
+      statusRequest = handlingData(response);
+      print(response);
+      if (statusRequest == StatusRequest.success) {
+        if (response['status'] == 'success') {
+          StudentDataController studentDataController =
+          Get.put(StudentDataController());
+          Get.snackbar(tr('successfulDelete'), "");
+          await getStudentLessons(studentLessonModel);
+        }
+      } else {
+        Get.snackbar(tr('connectionError'), "");
+      }
+    } catch (e) {
+      print('getTeacherLessons catch $e');
+    }
+
+    statusRequest = StatusRequest.success;
+    update();
+  }
 }

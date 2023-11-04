@@ -85,7 +85,7 @@ class AddStudentLesson extends StatelessWidget {
             child: Slider(
               min: 0,
               max: double.parse(mark),
-              divisions: int.parse(mark)*2,
+              divisions: int.parse(mark),
               value: double.parse(
                 studentLessonsController.level.text,
               ),

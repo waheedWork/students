@@ -14,7 +14,7 @@ class AppSignUpAndLoginButton extends StatelessWidget {
         color: Colors.grey.withOpacity(0.3),
         borderRadius: BorderRadius.circular(18),
       ),
-      margin: const EdgeInsets.only(top: 10, left: 22, right: 22),
+      margin: const EdgeInsets.only(top: 10, left: 11, right: 11),
       child: MaterialButton(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:students/controller/auth_controllers/teacher/allStudentsBayController.dart';
 import 'package:students/controller/auth_controllers/teacher/studentLessonController.dart';
 import 'package:students/core/constant/approutes.dart';
 import 'package:students/data/datasource/remote/auth/student/loginDate.dart';
@@ -14,7 +15,6 @@ class StudentsController extends GetxController {
   StudentLessonsData studentsLessonData = StudentLessonsData(Get.find());
   StatusRequest? statusRequest = StatusRequest.none;
   List<StudentModel> studentsList = [];
-  StudentLessonController studentLessonController = Get.find();
   LoginInfoData loginInfoData = LoginInfoData(Get.find());
 
   TextEditingController nameTextController = TextEditingController();
@@ -26,7 +26,6 @@ class StudentsController extends GetxController {
   TextEditingController pornDateTextController = TextEditingController();
   TextEditingController searchController = TextEditingController();
   TextEditingController bayController = TextEditingController();
-
 
   disposeTexts() {
     nameTextController = TextEditingController();
@@ -41,6 +40,7 @@ class StudentsController extends GetxController {
   }
 
   getStudents() async {
+    StudentLessonController studentLessonController = Get.find();
     statusRequest = StatusRequest.loading;
     update();
     studentsList.clear();
@@ -80,6 +80,7 @@ class StudentsController extends GetxController {
     statusRequest = StatusRequest.loading;
     update();
     try {
+      StudentLessonController studentLessonController = Get.find();
       var response = await studentsLessonData.addFirstComeStudentLessonsData(
         lessonId: studentLessonController.lessonId.toString(),
         studentId: studentsList[index].studentId.toString(),
@@ -112,7 +113,15 @@ class StudentsController extends GetxController {
     update();
   }
 
-  void toRegisterStudent() {
+  bool isRegister = true;
+
+  void toRegisterStudent(String s) {
+    if (s == 'update') {
+      isRegister = false;
+    } else {
+      isRegister = true;
+    }
+    update();
     disposeTexts();
     Get.toNamed(AppRoute.registerPage);
   }
@@ -161,18 +170,79 @@ class StudentsController extends GetxController {
     }
   }
 
+  updateStudent() async {
+    if (
+        // formState.currentState!.validate() &&
+        typeTextController.text.isNotEmpty) {
+      DateTime now = DateTime.now();
+      statusRequest = StatusRequest.loading;
+      update();
+
+      try {
+        var response = await loginInfoData.updateStudentData(
+          studentId: studentId,
+          studentName: nameTextController.text,
+          studentPassword: passwordTextController.text,
+          studentPhone: phoneTextController.text,
+          studentParentName: parentTextController.text,
+          studentParentPhone: parentPhoneTextController.text,
+          studentBornDate: pornDateTextController.text,
+          studentType: typeTextController.text,
+          studentBay: bayController.text,
+        );
+        print(response);
+        statusRequest = handlingData(response);
+        if (statusRequest == StatusRequest.success) {
+          if (response.toString().contains('success')) {
+          } else {
+            Get.snackbar(tr(response['message']), '');
+          }
+        } else {
+          // Get.snackbar(tr('connectionError'), statusRequest.toString());
+          Get.back();
+          Get.snackbar(tr('successful'), '');
+          AllStudentsBayController allStudentsBayController = Get.find();
+          await allStudentsBayController.getStudents();
+        }
+      } catch (e) {
+        print('getTeacherLessons catch $e');
+      }
+
+      update();
+      print('validate');
+    } else {
+      print('not validate');
+      Get.snackbar(tr('empty'), '');
+    }
+  }
+
   bool isSearch = false;
+
   void changeSearchMode() {
-    isSearch=!isSearch;
+    isSearch = !isSearch;
     update();
   }
 
   void closeSearch() {
-    if(searchController.text.isNotEmpty){
+    if (searchController.text.isNotEmpty) {
       searchController.clear();
-    }else{
+    } else {
       changeSearchMode();
     }
+    update();
+  }
+
+  String studentId = '-1';
+
+  void setValues(StudentModel studentModel) {
+    studentId = studentModel.studentId.toString();
+    nameTextController.text = studentModel.studentName.toString();
+    phoneTextController.text = studentModel.studentPhone.toString();
+    parentTextController.text = studentModel.studentParentName.toString();
+    parentPhoneTextController.text = studentModel.studentParentPhone.toString();
+    pornDateTextController.text = studentModel.studentBornDate.toString();
+    typeTextController.text = studentModel.studentType.toString();
+    bayController.text = studentModel.studentBay.toString();
     update();
   }
 }

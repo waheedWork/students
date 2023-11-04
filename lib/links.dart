@@ -24,13 +24,15 @@ class AppLinks {
   static const String deleteStudentLessonLink         = '$serverLink/lesson_student/delete.php';
   static const String deleteStudentLessonsLink         = '$serverLink/lesson_student/deleteStudent.php';
   static const String getStudentsNotIn         = '$serverLink/lesson_student/getStudentsNotIn.php';
-  static const String getStudentFriendTests         = '$serverLink/lesson_student//getFriendsTests.php';
+  static const String getStudentFriendTests         = '$serverLink/lesson_student/getFriendsTests.php';
 
 
   //==================== Student ======================
   static const String loginStudentLink         = '$serverLink/student/loginInfo.php';
   static const String getStudentBayLink      = '$serverLink/bay/getSum.php';
   static const String registerStudentLink      = '$serverLink/student/signupStudents.php';
+  static const String updateStudentLink      = '$serverLink/student/update.php';
   static const String bayStudentLink      = '$serverLink/bay/add.php';
+  static const String bayDeleteStudentLink      = '$serverLink/bay/delete.php';
   static const String getStudentSubjectsLink      = '$serverLink/lesson_student/getStudentLessonsData.php';
 }
