@@ -26,10 +26,10 @@ class StudentDataController extends GetxController {
   }
 
   getStudentData(String id) async {
-    studentModelId = id;
-    bayModelList.clear();
     statusRequest = StatusRequest.loading;
     update();
+    studentModelId = id;
+    bayModelList.clear();
     try {
       var response =
           await studentData.getStudentData(studentId: studentModelId);
@@ -50,6 +50,8 @@ class StudentDataController extends GetxController {
     update();
   }
 
+  String copy = '';
+
   Future<void> getStudentBay(String studentId) async {
     statusRequest = StatusRequest.loading;
     update();
@@ -61,11 +63,25 @@ class StudentDataController extends GetxController {
       print(response);
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
+          copy = '';
           List list = response['data'];
           for (var element in list) {
             bayModelList.add(BayModel.fromJson(element));
+            addCopies();
           }
           getSum();
+          copy += '\n' + tr('sum') +
+              ' : ' +
+              sum.toString() +
+              '\n';
+          copy += '\n' + tr('studentBay') +
+              ' : ' +
+              "${double.parse(bayModelList.first.studentBay.toString())}" +
+              '\n';
+          copy += '\n' + tr('remain') +
+              ' : ' +
+              "${double.parse(bayModelList.first.studentBay.toString())-sum}" +
+              '\n';
         }
       } else {
         Get.snackbar(tr('connectionError'), "");
@@ -93,10 +109,22 @@ class StudentDataController extends GetxController {
 
   void toEditeStudent() async {
     StudentsController studentsController = Get.put(StudentsController());
-    studentsController.toRegisterStudent('update');
 
- await   getStudentData(studentModelId);
+    studentsController.toRegisterStudent('update');
+    await getStudentData(studentModelId);
     studentsController.setValues(studentModel);
     // Get.to(AppRoute.registerPage);
+  }
+
+  void addCopies() {
+    copy += '\n' + tr('bay_number') + bayModelList.length.toString() + '\n';
+    copy += tr('quantity') +
+        ' : ' +
+        bayModelList.last.quantity.toString() +
+        '\n';
+    copy += tr('date') +
+        ' : ' +
+        bayModelList.last.bayDate.toString() +
+        '\n';
   }
 }

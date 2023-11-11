@@ -28,6 +28,8 @@ class StudentLessonsController extends GetxController {
   bool isCome = false;
   bool isExam = false;
 
+  String copy = '';
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -59,9 +61,9 @@ class StudentLessonsController extends GetxController {
   }
 
   getStudentLessons(StudentLessonModel studentLesson) async {
-    studentLessonModel = studentLesson;
     statusRequest = StatusRequest.loading;
     update();
+    studentLessonModel = studentLesson;
     studentLessonsList.clear();
     try {
       var response = await studentLessonsData.studentLessonsData(
@@ -73,8 +75,10 @@ class StudentLessonsController extends GetxController {
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
           List list = response['data'];
+          copy = '';
           for (var student in list) {
             studentLessonsList.add(StudentLessonModel.fromJson(student));
+            await copyLessons();
           }
         }
       } else {
@@ -178,23 +182,19 @@ class StudentLessonsController extends GetxController {
     update();
   }
 
-
-
   deleteStudentLesson(String id) async {
-    Get.back();
+    print('deleteStudentLesson');
     statusRequest = StatusRequest.loading;
     update();
+    Get.back();
     try {
-      var response = await studentLessonsData.deleteStudentLessonData(
-          id: id
-      );
-
+      var response = await studentLessonsData.deleteStudentLessonData(id: id);
       statusRequest = handlingData(response);
       print(response);
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
           StudentDataController studentDataController =
-          Get.put(StudentDataController());
+              Get.put(StudentDataController());
           Get.snackbar(tr('successfulDelete'), "");
           await getStudentLessons(studentLessonModel);
         }
@@ -207,5 +207,57 @@ class StudentLessonsController extends GetxController {
 
     statusRequest = StatusRequest.success;
     update();
+  }
+
+  void add(boo, String mark) {
+    double mark1 = double.parse(mark);
+    double v = double.parse(
+      level.text,
+    );
+    if (boo) {
+      if (mark1 > v) {
+        v++;
+      }
+    } else {
+      if (0 < v) {
+        v--;
+      }
+    }
+
+    level.text = v.toStringAsFixed(0);
+    update();
+  }
+
+  copyLessons() {
+    copy += '\n' + tr('lesson') + studentLessonsList.length.toString() + '\n';
+    if (studentLessonsList.last.studentLessonIsCome == '0') {
+      copy += tr('isNotCome') + '\n';
+    } else {
+      if (studentLessonsList.last.level.toString().isNotEmpty) {
+        copy += tr('level') +
+            ' : ' +
+            studentLessonsList.last.level.toString() +
+            '\n';
+      }
+      if (studentLessonsList.last.late.toString().isNotEmpty) {
+        copy += tr('late') +
+            ' : ' +
+            studentLessonsList.last.late.toString() +
+            tr("minute") +
+            '\n';
+      }
+      if (studentLessonsList.last.test.toString().isNotEmpty) {
+        copy += tr('exam_mark') +
+            ' : ' +
+            studentLessonsList.last.test.toString() +
+            '\n';
+      }
+      if (studentLessonsList.last.studentLessonNote.toString().isNotEmpty) {
+        copy += tr('note') +
+            ' : ' +
+            studentLessonsList.last.studentLessonNote.toString() +
+            '\n';
+      }
+    }
   }
 }

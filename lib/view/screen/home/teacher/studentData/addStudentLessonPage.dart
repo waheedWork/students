@@ -67,7 +67,6 @@ class AddStudentLesson extends StatelessWidget {
       );
     }
 
-
     levelWidget() {
       String mark = teacherController.teacherModel.subjectMark.toString();
       return Row(
@@ -91,11 +90,37 @@ class AddStudentLesson extends StatelessWidget {
               ),
               label: '${studentLessonsController.level.text} / $mark',
               onChanged: (value) {
-                studentLessonsController.level.text = value.toStringAsFixed(2);
+                studentLessonsController.level.text = value.toStringAsFixed(0);
                 studentLessonsController.update();
               },
             ),
           ),
+          Column(
+            children: [
+              InkWell(
+                  onLongPress: () {
+                    studentLessonsController.add(true,mark);
+                  },
+                  onTap: () {
+                    studentLessonsController.add(true,mark);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.add_circle_outline),
+                  )),
+              InkWell(
+                  onLongPress: () {
+                    studentLessonsController.add(false,mark);
+                  },
+                  onTap: () {
+                    studentLessonsController.add(false,mark);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.remove_circle_outline),
+                  )),
+            ],
+          )
         ],
       );
     }
@@ -120,6 +145,7 @@ class AddStudentLesson extends StatelessWidget {
         ),
       );
     }
+
     noteWidget() {
       return AppTextField(
         lines: 3,
@@ -178,19 +204,17 @@ class AddStudentLesson extends StatelessWidget {
                   ),
                 ),
               ),
-              GetBuilder<StudentLessonsController>(
-                builder: (controller) {
-                  return HandelingRequest(
-                    statusRequest: studentLessonsController.statusRequest!,
-                    widget: AppSignUpAndLoginButton(
-                      text: tr('add'),
-                      onPressed: () async {
-                        await studentLessonsController.addStudentLesson();
-                      },
-                    ),
-                  );
-                }
-              ),
+              GetBuilder<StudentLessonsController>(builder: (controller) {
+                return HandelingRequest(
+                  statusRequest: studentLessonsController.statusRequest!,
+                  widget: AppSignUpAndLoginButton(
+                    text: tr('add'),
+                    onPressed: () async {
+                      await studentLessonsController.addStudentLesson();
+                    },
+                  ),
+                );
+              }),
               SizedBox(
                 height: Get.height / 90,
               ),

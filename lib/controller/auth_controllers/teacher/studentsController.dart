@@ -235,6 +235,8 @@ class StudentsController extends GetxController {
   String studentId = '-1';
 
   void setValues(StudentModel studentModel) {
+    statusRequest = StatusRequest.loading;
+    update();
     studentId = studentModel.studentId.toString();
     nameTextController.text = studentModel.studentName.toString();
     phoneTextController.text = studentModel.studentPhone.toString();
@@ -243,6 +245,7 @@ class StudentsController extends GetxController {
     pornDateTextController.text = studentModel.studentBornDate.toString();
     typeTextController.text = studentModel.studentType.toString();
     bayController.text = studentModel.studentBay.toString();
-    update();
+    statusRequest = StatusRequest.success;
+     update();
   }
 }

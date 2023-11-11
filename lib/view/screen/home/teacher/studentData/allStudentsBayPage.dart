@@ -16,27 +16,35 @@ class AllStudentsBayPage extends StatelessWidget {
           studentsController.toBayStudentPage(index);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 2),
           child: Container(
-            color: Get.theme.primaryColor.withOpacity(0.2),
+            decoration: BoxDecoration(
+              color: Get.theme.primaryColor.withOpacity(0.6),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(22),
+              ),
+            ),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
+              padding: const EdgeInsets.symmetric(
+                vertical: 22.0,
+                horizontal: 5,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: Get.width / 3.2,
+                    width: Get.width / 2.8,
                     child: Text(
                       studentsController.studentsList[index].studentName
                           .toString(),
                       style: const TextStyle(
                         fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: Get.width / 3.5,
+                    width: Get.width / 4,
                     child: Text(
                       studentsController.studentsList[index].studentParentName
                           .toString(),
@@ -62,7 +70,6 @@ class AllStudentsBayPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

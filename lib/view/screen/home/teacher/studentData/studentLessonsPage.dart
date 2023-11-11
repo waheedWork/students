@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:students/controller/auth_controllers/teacher/studentLessonsController.dart';
 import 'package:students/core/class/handelingview.dart';
@@ -116,7 +117,7 @@ class StudentLessonsPage extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(),
+          const Divider( ),
           InkWell(
             onTap: () {
               studentLessonsController.toStudentDataPage(
@@ -173,6 +174,12 @@ class StudentLessonsPage extends StatelessWidget {
         title: Row(
           children: [
             const Text('lessons').tr(),
+            IconButton(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: studentLessonsController.copy));
+              },
+              icon: const Icon(Icons.copy),
+            ),
             Expanded(child: Container()),
             Text(
               studentLessonsController.studentLessonModel.studentName

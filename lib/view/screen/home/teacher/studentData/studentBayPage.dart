@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:students/controller/auth_controllers/teacher/allStudentsBayController.dart';
 import 'package:students/controller/auth_controllers/teacher/studentDataController.dart';
@@ -111,6 +112,13 @@ class StudentBayPage extends StatelessWidget {
         title: const Text('bay').tr(),
 
           actions: [
+
+            IconButton(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: controller.copy));
+              },
+              icon: const Icon(Icons.copy),
+            ),
             IconButton(
               onPressed: () {
                 if(teacherController.teacherModel.teacherId=='9'){
