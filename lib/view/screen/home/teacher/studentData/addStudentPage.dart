@@ -19,35 +19,45 @@ class AddStudentPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
-            color: Get.theme.primaryColor.withOpacity(0.2),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              color: Get.theme.primaryColor.withOpacity(0.2),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: Get.width / 3.2,
-                    child: Text(
-                      studentsController.studentsList[index].studentName
-                          .toString(),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: Get.width / 3.4,
+                      child: Text(
+                        studentsController.studentsList[index].studentName
+                            .toString(),
+                        style: TextStyle(color: Get.theme.primaryColor),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: Get.width / 3.5,
-                    child: Text(
-                      studentsController.studentsList[index].studentParentName
-                          .toString(),
+                    SizedBox(
+                      width: Get.width / 3.5,
+                      child: Text(
+                        studentsController.studentsList[index].studentParentName
+                            .toString(),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: Get.width / 3.1,
-                    child: Text(
-                      studentsController.studentsList[index].studentPhone
-                          .toString(),
+                    SizedBox(
+                      width: Get.width / 3.1,
+                      child: Text(
+                        studentsController.studentsList[index].studentPhone
+                            .toString(),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -114,9 +124,12 @@ class AddStudentPage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               if (controller.isSearch) {
                                 if (controller.studentsList[index].studentName
-                                    .toString().removeAllWhitespace
-                                    .isCaseInsensitiveContainsAny(
-                                        controller.searchController.text.removeAllWhitespace)) {
+                                    .toString()
+                                    .removeAllWhitespace
+                                    .isCaseInsensitiveContainsAny(controller
+                                        .searchController
+                                        .text
+                                        .removeAllWhitespace)) {
                                   return studentCard(index);
                                 } else {
                                   return Container();

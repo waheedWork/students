@@ -16,12 +16,13 @@ class StudentDashboardPage extends StatelessWidget {
       return InkWell(
         onTap: onTap,
         child: Card(
+          color: Get.theme.scaffoldBackgroundColor,
           shape: OutlineInputBorder(
             borderRadius: const BorderRadius.all(
               Radius.circular(11),
             ),
             borderSide: BorderSide(
-              color: Get.theme.primaryColor,
+              color: Get.theme.primaryColor,width: 0.4
             ),
           ),
           child: Center(
@@ -75,14 +76,16 @@ class StudentDashboardPage extends StatelessWidget {
       return InkWell(
         onTap: onTap,
         child: Card(
-          shape: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(11),
-            ),
-            borderSide: BorderSide(
-              color: Get.theme.primaryColor,
-            ),
-          ),
+
+          color: Get.theme.scaffoldBackgroundColor.withAlpha(111),
+          // shape: OutlineInputBorder(
+          //   borderRadius: const BorderRadius.all(
+          //     Radius.circular(12),
+          //   ),
+          //   borderSide: BorderSide(
+          //     color: Get.theme.primaryColor,width: 0
+          //   ),
+          // ),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(11.0),
@@ -130,12 +133,14 @@ class StudentDashboardPage extends StatelessWidget {
             studentDashboardController.toStudentAllDataPage();
           },
           child: Card(
+            color: Get.theme.scaffoldBackgroundColor,
             shape: OutlineInputBorder(
               borderRadius: const BorderRadius.all(
                 Radius.circular(11),
               ),
               borderSide: BorderSide(
-                color: Get.theme.primaryColor,
+                color: Get.theme.scaffoldBackgroundColor,
+                width: 0.5,
               ),
             ),
             child: Center(
@@ -162,7 +167,7 @@ class StudentDashboardPage extends StatelessWidget {
                 width: Get.width / 5,
                 height: Get.width / 5,
                 decoration: BoxDecoration(
-                  color: Get.theme.primaryColor.withOpacity(0.3),
+                  color: Get.theme.scaffoldBackgroundColor.withAlpha(111),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(12),
                   ),
@@ -174,17 +179,17 @@ class StudentDashboardPage extends StatelessWidget {
                       Text(
                         studentDashboardController.studentModel.studentName
                             .toString(),
-                        style: const TextStyle(
+                        style:  const TextStyle(
                           fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                       Text(
                         studentDashboardController.studentModel.studentPhone
                             .toString(),
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.bold,color: Get.theme.primaryColor
                         ),
                       ),
                       Text(

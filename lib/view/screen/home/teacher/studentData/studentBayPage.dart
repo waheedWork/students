@@ -41,17 +41,21 @@ class StudentBayPage extends StatelessWidget {
     }
 
     sumWidget() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${tr('sum')}  :  ${controller.sum.toStringAsFixed(0)} / ${controller.bayModelList.first.studentBay}',
-            style: const TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
+      return SingleChildScrollView(
+
+       scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${tr('sum')}  :  ${controller.sum.toStringAsFixed(0)} / ${controller.bayModelList.first.studentBay}',
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 

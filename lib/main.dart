@@ -39,14 +39,23 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'StudentApp',
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+        ),
         useMaterial3: true,
-        appBarTheme: AppBarTheme(color: Colors.blue.shade50),
-        primaryColor: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          color: Color.fromRGBO(30, 129, 176, 1),
+          foregroundColor: Colors.white,
+        ),
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: const Color.fromRGBO(30, 129, 176, 1),
         fontFamily: 'Cairo',
+        drawerTheme: const DrawerThemeData(
+          backgroundColor:Color.fromRGBO(30, 129, 176, 1),elevation: 1
+        ),
         textTheme: const TextTheme(),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.blue,
+          backgroundColor: Color.fromRGBO(30, 129, 176, 1),
           foregroundColor: Colors.white,
         ),
       ),

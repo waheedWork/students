@@ -61,7 +61,13 @@ class AllStudentsBayController extends GetxController {
 
     Get.defaultDialog(
       title: tr('bay'),
-      content: SizedBox(
+      content: Container(
+        decoration: BoxDecoration(
+          color: Get.theme.scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
         height: Get.height / 3,
         child: Column(
           children: [
@@ -81,7 +87,6 @@ class AllStudentsBayController extends GetxController {
             AppSignUpAndLoginButton(
               text: tr('add'),
               onPressed: () async {
-
                 await bay(quantityController.text);
               },
             )
@@ -106,7 +111,10 @@ class AllStudentsBayController extends GetxController {
         print(response);
         if (statusRequest == StatusRequest.success) {
           if (response['status'] == 'success') {
-            Get.snackbar(tr('successful'), "",);
+            Get.snackbar(
+              tr('successful'),
+              "",
+            );
             StudentDataController studentDataController =
                 Get.put(StudentDataController());
             await studentDataController.getStudentBay(studentId);
@@ -128,9 +136,7 @@ class AllStudentsBayController extends GetxController {
     statusRequest = StatusRequest.loading;
     update();
     try {
-      var response = await studentBayData.studentDeleteBayData(
-        bayId: bayId
-      );
+      var response = await studentBayData.studentDeleteBayData(bayId: bayId);
 
       statusRequest = handlingData(response);
       print(response);
@@ -138,7 +144,7 @@ class AllStudentsBayController extends GetxController {
         if (response['status'] == 'success') {
           Get.snackbar(tr('successfulDelete'), "");
           StudentDataController studentDataController =
-          Get.put(StudentDataController());
+              Get.put(StudentDataController());
           await studentDataController.getStudentBay(studentId);
         }
       } else {

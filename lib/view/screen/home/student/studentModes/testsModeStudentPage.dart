@@ -23,51 +23,58 @@ class TestsModeStudentPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    AppFunctions.getDate(
-                      controller.testsList[index].stdLesDate.toString(),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Text(
+                      AppFunctions.getDate(
+                        controller.testsList[index].stdLesDate.toString(),
+                      ),
+                      style: const TextStyle(fontSize: 9),
                     ),
-                    style: const TextStyle(fontSize: 9),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    controller.testsList[index].lessonDay.toString(),
-                    style: const TextStyle(fontSize: 9),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    controller.testsList[index].lessonTime.toString(),
-                    style: const TextStyle(fontSize: 9),
-                  ),
-                  SizedBox(
-                    width: Get.width / 4,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      controller.toFriendsTestsPage(index);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: const Text(
-                        'exam_friends',
-                        style: TextStyle(fontSize: 8, color: Colors.blue),
-                      ).tr(),
+                    const SizedBox(
+                      width: 5,
                     ),
-                  ),
-                ],
+                    Text(
+                      controller.testsList[index].lessonDay.toString(),
+                      style: const TextStyle(fontSize: 9),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      controller.testsList[index].lessonTime.toString(),
+                      style: const TextStyle(fontSize: 9),
+                    ),
+                    SizedBox(
+                      width: Get.width / 4,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        controller.toFriendsTestsPage(index);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          'exam_friends',
+                          style: TextStyle(
+                              fontSize: 8, color: Get.theme.primaryColor),
+                        ).tr(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               ListTile(
                 shape: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
-                  borderSide: BorderSide(color: Get.theme.primaryColor),
+                  borderSide: BorderSide(
+                    color: Get.theme.primaryColor,
+                    width: 0.2,
+                  ),
                 ),
                 title: Row(
                   children: [
@@ -75,6 +82,7 @@ class TestsModeStudentPage extends StatelessWidget {
                       width: Get.width / 5,
                       child: Text(
                         controller.testsList[index].subjectName.toString(),
+                        style: TextStyle(color: Get.theme.primaryColor),
                       ),
                     ),
                     Text(
@@ -137,7 +145,10 @@ class TestsModeStudentPage extends StatelessWidget {
             },
             child: Card(
               shape: OutlineInputBorder(
-                borderSide: BorderSide(color: Get.theme.primaryColor),
+                borderSide: BorderSide(
+                  color: Get.theme.primaryColor,
+                  width: 0.6,
+                ),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),
                 ),

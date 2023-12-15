@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppTextField extends StatelessWidget {
   AppTextField({
@@ -56,10 +57,14 @@ class AppTextField extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               type,
+              style: TextStyle(),
             ),
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintText: type,
+          hintStyle: TextStyle(
+            color: Get.theme.primaryColor,
+          ),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           border: OutlineInputBorder(

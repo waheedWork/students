@@ -18,6 +18,7 @@ class AllStudentsBayPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 2),
           child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               color: Get.theme.primaryColor.withOpacity(0.6),
               borderRadius: const BorderRadius.all(
@@ -29,35 +30,38 @@ class AllStudentsBayPage extends StatelessWidget {
                 vertical: 22.0,
                 horizontal: 5,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: Get.width / 2.8,
-                    child: Text(
-                      studentsController.studentsList[index].studentName
-                          .toString(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: Get.width / 2.6,
+                      child: Text(
+                        studentsController.studentsList[index].studentName
+                            .toString(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: Get.width / 4,
-                    child: Text(
-                      studentsController.studentsList[index].studentParentName
-                          .toString(),
+                    SizedBox(
+                      width: Get.width / 5,
+                      child: Text(
+                        studentsController.studentsList[index].studentParentName
+                            .toString(),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: Get.width / 3.1,
-                    child: Text(
-                      studentsController.studentsList[index].studentPhone
-                          .toString(),
+                    SizedBox(
+                      width: Get.width / 3.1,
+                      child: Text(
+                        studentsController.studentsList[index].studentPhone
+                            .toString(),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

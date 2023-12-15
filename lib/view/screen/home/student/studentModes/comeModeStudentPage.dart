@@ -26,68 +26,74 @@ class ComeModeStudentPage extends StatelessWidget {
             ),
             borderSide: BorderSide(color: Get.theme.primaryColor),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: Get.width / 3,
-                child: controller.comeList[index]
-                    ? controller.studentALLSubjectsList[index].late
-                                .toString() ==
-                            ''
-                        ? const Icon(
-                            Icons.done_outline_rounded,
-                            color: Colors.greenAccent,
-                          )
-                        : Row(
-                            children: [
-                              const Text('late').tr(),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                controller.studentALLSubjectsList[index].late
-                                    .toString(),
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              const Text('minute').tr(),
-                            ],
-                          )
-                    : const Text(
-                        'isNotCome',
-                        style: TextStyle(fontSize: 18),
-                      ).tr(),
-              ),
-              SizedBox(
-                width: Get.width / 7,
-                child: Column(
-                  children: [
-                    Text(
-                      controller.studentALLSubjectsList[index].lessonDay
-                          .toString(),
-                      style: const TextStyle(fontSize: 11),
-                    ),
-                    Text(
-                      controller.studentALLSubjectsList[index].lessonTime
-                          .toString(),
-                      style: const TextStyle(fontSize: 11),
-                    ),
-                  ],
+          title: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: Get.width / 4,
+                  child: controller.comeList[index]
+                      ? controller.studentALLSubjectsList[index].late
+                                  .toString() ==
+                              ''
+                          ? const Icon(
+                              Icons.done_outline_rounded,
+                              color: Colors.greenAccent,
+                            )
+                          : Row(
+                              children: [
+                                const Text('late',
+                                  style: TextStyle(fontSize: 12),).tr(),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  controller.studentALLSubjectsList[index].late
+                                      .toString(),
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                const Text('minute',
+                                  style: TextStyle(fontSize: 12),).tr(),
+                              ],
+                            )
+                      : const Text(
+                          'isNotCome',
+                          style: TextStyle(fontSize: 12),
+                        ).tr(),
                 ),
-              ),
-              SizedBox(
-                width: Get.width / 7,
-                child: Text(
-                  AppFunctions.getDate(
-                    controller.studentALLSubjectsList[index].stdLesDate
-                        .toString(),
+                SizedBox(
+                  width: Get.width / 7,
+                  child: Column(
+                    children: [
+                      Text(
+                        controller.studentALLSubjectsList[index].lessonDay
+                            .toString(),
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                      Text(
+                        controller.studentALLSubjectsList[index].lessonTime
+                            .toString(),
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                    ],
                   ),
-                  style: const TextStyle(fontSize: 8),
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: Get.width / 6,
+                  child: Text(
+                    AppFunctions.getDate(
+                      controller.studentALLSubjectsList[index].stdLesDate
+                          .toString(),
+                    ),
+                    style: const TextStyle(fontSize: 8),
+                  ),
+                ),
+              ],
+            ),
           ),
           // subtitle:
           //     : ,
