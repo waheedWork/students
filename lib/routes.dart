@@ -19,6 +19,7 @@ import 'package:students/view/screen/home/teacher/studentData/studentComePage.da
 import 'package:students/view/screen/home/teacher/studentData/studentDataPage.dart';
 import 'package:students/view/screen/home/teacher/studentData/studentLessonsPage.dart';
 import 'package:students/view/screen/home/teacher/studentData/studentTestsPage.dart';
+import 'package:students/view/screen/home/teacher/teachersPage.dart';
 
 import 'core/constant/approutes.dart';
 import 'view/screen/home/teacher/addLessonPage.dart';
@@ -120,5 +121,9 @@ List<GetPage<dynamic>>? routes = [
   GetPage(
     name: AppRoute.teacherDashboard,
     page: () => const TeacherDashboard(),
+  ),
+  GetPage(
+    name: AppRoute.teachersPage,
+    page: () => const TeachersPage(),
   ),
 ];

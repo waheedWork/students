@@ -1,5 +1,3 @@
-
-
 import '../../../../../core/class/crud.dart';
 import '../../../../../links.dart';
 
@@ -10,16 +8,19 @@ class SignUpData {
 
   signUpUser({
     required String username,
-    required String email,
+    required String subjectId,
     required String password,
     required String phone,
   }) async {
-    var response = await crud.postData(AppLinks.signUpLink, {
-      'username': username,
-      'password': password,
-      'phone': phone,
-      'email': email
-    });
+    var response = await crud.postData(
+      AppLinks.signUpLink,
+      {
+        'username': username,
+        'password': password,
+        'phone': phone,
+        'subject_id': subjectId
+      },
+    );
     return response.fold((l) => l, (r) => r);
   }
 }

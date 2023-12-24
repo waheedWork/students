@@ -69,7 +69,8 @@ class TeacherDashboard extends StatelessWidget {
                     .toString(),
               ),
             ),
-            trailing: Column(mainAxisAlignment: MainAxisAlignment.center,
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   teacherController.teacherLessonsList[index].lessonTime
@@ -115,34 +116,66 @@ class TeacherDashboard extends StatelessWidget {
                   ));
             },
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'personal',
-                style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Get.theme.primaryColor,
+                ),
               ).tr(),
             ),
           ),
+          const Divider(thickness: 0.3),
           InkWell(
             onTap: () {
               teacherController.toAllStudentsBayPage();
             },
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'bay',
-                style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Get.theme.primaryColor,
+                ),
               ).tr(),
             ),
           ),
+          const Divider(thickness: 0.3),
+          InkWell(
+            onTap: () {
+              teacherController.toTeacherRegisterPage();
+            },
+            child: ListTile(
+              title: Text(
+                'teachersRegister',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Get.theme.primaryColor,
+                ),
+              ).tr(),
+            ),
+          ),
+          const Divider(thickness: 0.3),
+          Expanded(child: Container()),
           InkWell(
             onTap: () {
               teacherController.logout();
             },
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'logout',
-                style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Get.theme.primaryColor,
+                ),
               ).tr(),
             ),
           ),
+          const Divider(thickness: 0.3),
         ],
       );
     }

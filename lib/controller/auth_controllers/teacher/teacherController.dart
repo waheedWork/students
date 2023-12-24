@@ -125,4 +125,10 @@ class TeacherController extends GetxController {
     statusRequest = StatusRequest.success;
     update();
   }
+
+  void toTeacherRegisterPage() {
+    Get.toNamed(
+      AppRoute.teachersPage,
+    );
+  }
 }

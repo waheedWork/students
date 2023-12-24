@@ -51,12 +51,15 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromRGBO(30, 129, 176, 1),
         fontFamily: 'Cairo',
         drawerTheme: const DrawerThemeData(
-          backgroundColor:Color.fromRGBO(30, 129, 176, 1),elevation: 1
+          backgroundColor: Color.fromRGBO(30, 129, 176, 1),
+          elevation: 1,
         ),
         textTheme: const TextTheme(),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Color.fromRGBO(30, 129, 176, 1),
           foregroundColor: Colors.white,
+          elevation: 5,
+          iconSize: 44,
         ),
       ),
       getPages: routes,

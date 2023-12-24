@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:students/core/class/statusrequest.dart';
 import 'package:students/core/constant/approutes.dart';
+import 'package:students/core/function/checkinternet.dart';
 import 'package:students/data/model/teacher_model.dart';
 
 import '../../../core/function/handlingdata.dart';
@@ -28,39 +29,48 @@ class TeacherLoginController extends GetxController {
   }
 
   loginTeacher(bool hasData) async {
-    if (hasData || formState.currentState!.validate()) {
-      statusRequest = StatusRequest.loading;
-      update();
+    statusRequest = StatusRequest.loading;
+    update();
+      if (hasData || formState.currentState!.validate()) {
+        if (await checkInternet()) {
+        var response = await loginData.loginData(
+          name: name.text,
+          password: password.text,
+        );
+        statusRequest = handlingData(response);
+        if (statusRequest == StatusRequest.success) {
+          if (response['status'] == 'success') {
+            teacherModel = TeacherModel.fromJson(response['data']);
+            teacherModel.teacherPassword = password.text;
+            String jsonString = jsonEncode(teacherModel.toJson());
+            await myServices.sharedPreferences
+                .setString('teacherModel', jsonString);
+            myServices.sharedPreferences.setString('step', '1');
 
-      var response = await loginData.loginData(
-        name: name.text,
-        password: password.text,
-      );
-      statusRequest = handlingData(response);
-      if (statusRequest == StatusRequest.success) {
-        if (response['status'] == 'success') {
-          teacherModel = TeacherModel.fromJson(response['data']);
-          teacherModel.teacherPassword = password.text;
-          String jsonString = jsonEncode(teacherModel.toJson());
-          await myServices.sharedPreferences
-              .setString('teacherModel', jsonString);
-          myServices.sharedPreferences.setString('step', '1');
-          update();
-          Get.offAllNamed(AppRoute.teacherDashboard);
-        } else {
-          Get.snackbar(tr('loginError'), tr('PasswordNameUsed'));
-          statusRequest = StatusRequest.failure;
+            Get.offAllNamed(AppRoute.teacherDashboard);
+          } else {
+            Get.snackbar(tr('loginError'), tr('PasswordNameUsed'));
+            statusRequest = StatusRequest.failure;
 
-          if (hasData) {
-            Get.offNamed(AppRoute.userTypePage);
+            if (hasData) {
+              Get.offNamed(AppRoute.userTypePage);
+            }
           }
         }
+        update();
+        print('validate');
+
+      } else {
+        Get.snackbar(tr('connectionError'), '');
+        statusRequest = StatusRequest.failure;
       }
-      update();
-      print('validate');
-    } else {
-      print('not validate');
-    }
+
+      } else {
+        print('not validate');
+        statusRequest = StatusRequest.failure;
+      }
+
+    update();
   }
 
   void loginTeacherWithData() {

@@ -22,6 +22,7 @@ class AppRoute {
 //====================== Teacher =====================
   static String loginTeacher = '/loginTeacher';
   static String teacherDashboard = '/teacherDashboard';
+  static String teachersPage = '/teachersPage';
   static String teacherAddLesson = '/teacherAddLesson';
   static String studentsLessonPage = '/studentsLessonPage';
   static String studentLessonsPage = '/studentLessonsPage';

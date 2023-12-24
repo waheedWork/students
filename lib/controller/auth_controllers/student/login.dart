@@ -6,6 +6,7 @@ import 'package:students/core/class/statusrequest.dart';
 import 'package:students/core/constant/approutes.dart';
 import 'package:students/data/datasource/remote/auth/student/loginDate.dart';
 import 'package:students/data/model/student_model.dart';
+import '../../../core/function/checkinternet.dart';
 import '../../../core/function/handlingdata.dart';
 import '../../../core/services/services.dart';
 
@@ -24,41 +25,50 @@ class StudentLoginController extends GetxController {
   }
 
   loginStudent(bool hasData) async {
-    if (hasData || formState.currentState!.validate()) {
-      statusRequest = StatusRequest.loading;
-      update();
-
-      var response = await loginData.loginInfoData(
-        password: password.text,
-      );
-      statusRequest = handlingData(response);
-      if (statusRequest == StatusRequest.success) {
-        if (response['status'] == 'success') {
-          studentModel = StudentModel.fromJson(response['data']);
-          studentModel.studentPassword = password.text;
-          String jsonString = jsonEncode(studentModel.toJson());
-          await myServices.sharedPreferences
-              .setString('studentModel', jsonString);
-          myServices.sharedPreferences.setString('step', '2');
-          myServices.sharedPreferences.setString('step', '2');
-          statusRequest = StatusRequest.success;
-          update();
-          Get.offAllNamed(AppRoute.studentDashboard);
-        } else {
-          Get.snackbar(tr('loginError'), tr('PasswordError'));
-          statusRequest = StatusRequest.failure;
-          if (hasData) {
-            Get.offNamed(AppRoute.userTypePage);
+    statusRequest = StatusRequest.loading;
+    update();
+      if (hasData || formState.currentState!.validate()) {
+        if (await checkInternet()) {
+        var response = await loginData.loginInfoData(
+          password: password.text,
+        );
+        statusRequest = handlingData(response);
+        if (statusRequest == StatusRequest.success) {
+          if (response['status'] == 'success') {
+            studentModel = StudentModel.fromJson(response['data']);
+            studentModel.studentPassword = password.text;
+            String jsonString = jsonEncode(studentModel.toJson());
+            await myServices.sharedPreferences
+                .setString('studentModel', jsonString);
+            myServices.sharedPreferences.setString('step', '2');
+            myServices.sharedPreferences.setString('step', '2');
+            statusRequest = StatusRequest.success;
+            update();
+            Get.offAllNamed(AppRoute.studentDashboard);
+          } else {
+            Get.snackbar(tr('loginError'), tr('PasswordError'));
+            statusRequest = StatusRequest.failure;
+            if (hasData) {
+              Get.offNamed(AppRoute.userTypePage);
+            }
           }
+        } else {
+          Get.snackbar(tr('connectionError'), '');
+          statusRequest = StatusRequest.failure;
         }
+        print('validate');
+
       } else {
         Get.snackbar(tr('connectionError'), '');
+        statusRequest = StatusRequest.failure;
       }
-      update();
-      print('validate');
-    } else {
-      print('not validate');
-    }
+      } else {
+        print('not validate');
+        statusRequest = StatusRequest.failure;
+      }
+
+
+    update();
   }
 
   void loginStudentWithData() async {

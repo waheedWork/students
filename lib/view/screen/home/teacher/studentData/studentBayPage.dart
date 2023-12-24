@@ -114,9 +114,7 @@ class StudentBayPage extends StatelessWidget {
             ),
       appBar: AppBar(
         title: const Text('bay').tr(),
-
           actions: [
-
             IconButton(
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: controller.copy));
