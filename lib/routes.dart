@@ -11,6 +11,7 @@ import 'package:students/view/screen/home/student/studentModes/comeModeStudentPa
 import 'package:students/view/screen/home/student/studentModes/friendsTestsPage.dart';
 import 'package:students/view/screen/home/student/studentModes/noteModeStudentPage.dart';
 import 'package:students/view/screen/home/student/studentModes/testsModeStudentPage.dart';
+import 'package:students/view/screen/home/teacher/addTeacherPage.dart';
 import 'package:students/view/screen/home/teacher/dashboard.dart';
 import 'package:students/view/screen/home/teacher/studentData/allStudentsBayPage.dart';
 import 'package:students/view/screen/home/teacher/studentData/registerStudentPage.dart';
@@ -125,5 +126,9 @@ List<GetPage<dynamic>>? routes = [
   GetPage(
     name: AppRoute.teachersPage,
     page: () => const TeachersPage(),
+  ),
+  GetPage(
+    name: AppRoute.addTeacherPage,
+    page: () => const AddTeacherPage(),
   ),
 ];

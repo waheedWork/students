@@ -12,6 +12,28 @@ class Crud {
     try {
       if (await checkInternet()) {
         var response = await http.post(Uri.parse(urlLink), body: data);
+        print('response.body');
+        print(response.body);
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          Map responseBody = jsonDecode(response.body);
+          print('==========response.length================');
+          print(responseBody.length);
+          print('==========Crud================');
+          return Right(responseBody);
+        } else {
+          return const Left(StatusRequest.failure);
+        }
+      } else {
+        return const Left(StatusRequest.offline);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverExp);
+    }
+  }
+  Future<Either<StatusRequest, Map>> getData(String urlLink) async {
+    try {
+      if (await checkInternet()) {
+        var response = await http.get(Uri.parse(urlLink));
         if (response.statusCode == 200 || response.statusCode == 201) {
           Map responseBody = jsonDecode(response.body);
           print('==========response.length================');

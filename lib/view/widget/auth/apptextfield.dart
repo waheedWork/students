@@ -30,6 +30,10 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Get.theme.primaryColor.withOpacity(0.1),
+        borderRadius: const BorderRadius.all(Radius.circular(18))
+      ),
       margin: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
       child: TextFormField(
         maxLines: lines,
@@ -44,7 +48,7 @@ class AppTextField extends StatelessWidget {
         decoration: InputDecoration(
           hintTextDirection: TextDirection.ltr,
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(),
+            borderSide:    BorderSide(color: Get.theme.primaryColor),
             borderRadius: BorderRadius.circular(18),
           ),
           suffixIcon: IconButton(

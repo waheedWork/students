@@ -36,4 +36,5 @@ class AppRoute {
   static String addStudentLesson = '/addStudentLesson';
   static String friendsTestsPage = '/friendsTestsPage';
   static String allDataStudentPage = '/allDataStudentPage';
+  static String addTeacherPage = '/addTeacherPage';
 }

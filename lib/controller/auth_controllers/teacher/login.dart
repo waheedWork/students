@@ -15,6 +15,7 @@ import '../../../data/datasource/remote/auth/teacher/login.dart';
 
 class TeacherLoginController extends GetxController {
   TextEditingController name = TextEditingController();
+
   TextEditingController password = TextEditingController();
   late GlobalKey<FormState> formState = GlobalKey<FormState>();
   bool showText = true;

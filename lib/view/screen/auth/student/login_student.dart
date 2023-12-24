@@ -21,34 +21,36 @@ class LoginStudentPage extends StatelessWidget {
           builder: (studentController) {
             return Form(
               key: studentController.formState,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
 
-                  AppTextField(
-                    type: tr('password'),
-                    obscureText: studentController.showText,
-                    onTap: () {
-                      studentController.changeShow();
-                    },
-                    iconData: Icons.password,
-                    inputType: TextInputType.visiblePassword,
-                    onChanged: (p0) {},
-                    validator: (p0) {
-                      return validInput(p0!, 8, 50, 'password');
-                    },
-                    textFieldController: studentController.password,
-                  ),
-                  HandelingRequest(
-                    statusRequest: studentController.statusRequest!,
-                    widget: AppSignUpAndLoginButton(
-                      text: tr('login'),
-                      onPressed: () async {
-                        await studentController.loginStudent(false);
+                    AppTextField(
+                      type: tr('password'),
+                      obscureText: studentController.showText,
+                      onTap: () {
+                        studentController.changeShow();
                       },
+                      iconData: Icons.password,
+                      inputType: TextInputType.visiblePassword,
+                      onChanged: (p0) {},
+                      validator: (p0) {
+                        return validInput(p0!, 8, 50, 'password');
+                      },
+                      textFieldController: studentController.password,
                     ),
-                  ),
-                ],
+                    HandelingRequest(
+                      statusRequest: studentController.statusRequest!,
+                      widget: AppSignUpAndLoginButton(
+                        text: tr('login'),
+                        onPressed: () async {
+                          await studentController.loginStudent(false);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
