@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
     required this.validator,
     this.obscureText = false,
     this.auto = false,
+    this.readOnly = false,
     this.lines = 1,
     this.onTap,
     required this.textFieldController,
@@ -20,6 +21,7 @@ class AppTextField extends StatelessWidget {
   late int lines;
   late bool obscureText;
   late bool auto;
+  late bool readOnly;
   late IconData iconData;
   late TextInputType inputType;
   late String? Function(String?)? onChanged;
@@ -35,7 +37,7 @@ class AppTextField extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(18))
       ),
       margin: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-      child: TextFormField(
+      child: TextFormField(readOnly: readOnly,
         maxLines: lines,
         autofocus: auto,
         style: TextStyle(color: Theme.of(context).primaryColor),

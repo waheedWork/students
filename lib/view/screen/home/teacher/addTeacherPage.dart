@@ -13,6 +13,34 @@ class AddTeacherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AllTeachersController allTeachersController = Get.find();
+
+    customSubjectBtn(
+        Null Function() param0, String subject, String subjectNum) {
+      return InkWell(
+        onTap: (){
+          param0();
+          allTeachersController.update();
+        },
+        child: Card(
+          color: subjectNum == allTeachersController.subject.text
+              ? Get.theme.scaffoldBackgroundColor
+              : Get.theme.canvasColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              subject,
+              style: TextStyle(
+                color: subjectNum != allTeachersController.subject.text
+                    ? Get.theme.scaffoldBackgroundColor
+                    : Get.theme.canvasColor,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('add_teacher').tr(),
@@ -38,9 +66,7 @@ class AddTeacherPage extends StatelessWidget {
                     ),
                     AppTextField(
                       type: tr('phone'),
-                      onTap: () {
-                
-                      },
+                      onTap: () {},
                       iconData: Icons.phone,
                       inputType: TextInputType.phone,
                       onChanged: (p0) {},
@@ -51,9 +77,8 @@ class AddTeacherPage extends StatelessWidget {
                     ),
                     AppTextField(
                       type: tr('subject'),
-                      onTap: () {
-
-                      },
+                      onTap: () {},
+                      readOnly: true,
                       iconData: Icons.subject,
                       inputType: TextInputType.text,
                       onChanged: (p0) {},
@@ -61,6 +86,58 @@ class AddTeacherPage extends StatelessWidget {
                         // return validInput(p0!, 8, 50, 'password');
                       },
                       textFieldController: teacherController.subject,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            customSubjectBtn(
+                              () {
+                                teacherController.subject.text = '5';
+                              },
+                              'فيزياء',
+                              '5',
+                            ),
+                            customSubjectBtn(
+                              () {
+                                teacherController.subject.text = '6';
+                              },
+                              'رياضيات',
+                              '6',
+                            ),
+                            customSubjectBtn(
+                              () {
+                                teacherController.subject.text = '8';
+                              },
+                              'انكليزي',
+                              '8',
+                            ),
+                            customSubjectBtn(
+                              () {
+                                teacherController.subject.text = '9';
+                              },
+                              'فرنسي',
+                              '9',
+                            ),
+                            customSubjectBtn(
+                              () {
+                                teacherController.subject.text = '12';
+                              },
+                              'قومية',
+                              '12',
+                            ),
+                            customSubjectBtn(
+                              () {
+                                teacherController.subject.text = '13';
+                              },
+                              'علوم',
+                              '13',
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     AppTextField(
                       type: tr('password'),

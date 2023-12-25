@@ -11,7 +11,9 @@ class AppLinks {
   static const String loginLink         = '$serverLink/auth/login_teacher.php';
   static const String getTeacherLessonLink         = '$serverLink/lesson/getTeacherLesson.php';
   static const String getStudentIdLink         = '$serverLink/student/getStudent.php';
+  static const String addTeacherLink         = '$serverLink/auth/signup.php';
   static const String getAllTeachersLink         = '$serverLink/auth/getAllTeachers.php';
+  static const String deleteTeacherLink         = '$serverLink/auth/deleteTeacher.php';
 
 
   //==================== Lesson ======================

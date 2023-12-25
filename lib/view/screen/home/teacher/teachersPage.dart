@@ -27,29 +27,76 @@ class TeachersPage extends StatelessWidget {
       ),
       body: Center(
         child: GetBuilder<AllTeachersController>(
-          builder: (allTeachersController) =>
-              allTeachersController.statusRequest == StatusRequest.loading
-                  ? const CircularProgressIndicator()
-                  : allTeachersController.teachersModelList.isEmpty
-                      ? const Text('no_teachers').tr()
-                      : ListView.builder(
-                          itemCount:
-                              allTeachersController.teachersModelList.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(
-                                allTeachersController
-                                    .teachersModelList[index].teacherName
-                                    .toString(),style: TextStyle(color: Get.theme.backgroundColor,),
-                              ),
-                              trailing: Text(
-                                allTeachersController
-                                    .teachersModelList[index].teacherPhone
-                                    .toString(),style: TextStyle(color: Get.theme.backgroundColor,),
-                              ),
-                            );
-                          },
-                        ),
+          builder: (allTeachersController) => allTeachersController
+                      .statusRequest ==
+                  StatusRequest.loading
+              ? const CircularProgressIndicator()
+              : allTeachersController.teachersModelList.isEmpty
+                  ? const Text('no_teachers').tr()
+                  : ListView.builder(
+                      itemCount: allTeachersController.teachersModelList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                            allTeachersController
+                                .teachersModelList[index].teacherName
+                                .toString(),
+                            style: TextStyle(
+                              color: Get.theme.backgroundColor,
+                            ),
+                          ),
+                          leading: IconButton(
+                            onPressed: () {
+                              Get.defaultDialog(
+                                  title: tr('delete'),
+                                  content: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          Get.back();
+                                          await allTeachersController
+                                              .deleteTeacher(
+                                            allTeachersController
+                                                .teachersModelList[index]
+                                                .teacherId
+                                                .toString(),
+                                          );
+                                        },
+                                        child: const Text('ok').tr(),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: const Text('back').tr(),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                            icon:
+                                Icon(Icons.close, color: Get.theme.canvasColor),
+                          ),
+                          trailing: Text(
+                            allTeachersController
+                                .teachersModelList[index].teacherPhone
+                                .toString(),
+                            style: TextStyle(
+                              color: Get.theme.backgroundColor,
+                            ),
+                          ),
+                          subtitle: Text(
+                            allTeachersController
+                                .teachersModelList[index].subjectName
+                                .toString(),
+                            style: TextStyle(
+                              color: Get.theme.backgroundColor.withOpacity(0.5),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
         ),
       ),
     );

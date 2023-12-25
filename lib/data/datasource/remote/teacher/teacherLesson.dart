@@ -43,4 +43,35 @@ class TeacherListData {
     );
     return response.fold((l) => l, (r) => r);
   }
+
+  teacherAddData({
+    required String teacher_name,
+    required String teacher_phone,
+    required String teacher_password,
+    required String subject_id,
+  }) async {
+    var response = await crud.postData(
+      AppLinks.addTeacherLink,
+      {
+        'teacher_name': teacher_name,
+        'teacher_phone': teacher_phone,
+        'teacher_password': teacher_password,
+        'subject_id': subject_id,
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
+
+
+  deleteStudentLessonData({
+    required String teacherId,
+  }) async {
+    var response = await crud.postData(
+      AppLinks.deleteTeacherLink,
+      {
+        'teacher_id': teacherId,
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
 }

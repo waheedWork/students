@@ -143,10 +143,13 @@ class TeacherDashboard extends StatelessWidget {
             ),
           ),
           const Divider(thickness: 0.3),
+          teacherController.teacherModel.teacherId=='9'?
           InkWell(
             onTap: () {
               teacherController.toTeacherRegisterPage();
             },
+
+
             child: ListTile(
               title: Text(
                 'teachersRegister',
@@ -157,7 +160,7 @@ class TeacherDashboard extends StatelessWidget {
                 ),
               ).tr(),
             ),
-          ),
+          ):Container(),
           const Divider(thickness: 0.3),
           Expanded(child: Container()),
           InkWell(

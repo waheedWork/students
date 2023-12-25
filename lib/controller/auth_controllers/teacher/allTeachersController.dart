@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:students/data/model/teacher_model.dart';
 
 import '../../../core/class/statusrequest.dart';
+import '../../../core/function/checkinternet.dart';
 import '../../../core/function/handlingdata.dart';
 import '../../../data/datasource/remote/teacher/teacherLesson.dart';
 
@@ -21,9 +22,10 @@ class AllTeachersController extends GetxController {
   TextEditingController subject = TextEditingController();
 
   void changeShow() {
-    showText =!showText;
+    showText = !showText;
     update();
   }
+
   @override
   Future<void> onInit() async {
     await getTeachersList();
@@ -31,7 +33,7 @@ class AllTeachersController extends GetxController {
   }
 
   getTeachersList() async {
-     statusRequest = StatusRequest.loading;
+    statusRequest = StatusRequest.loading;
     update();
     teachersModelList.clear();
     try {
@@ -60,6 +62,73 @@ class AllTeachersController extends GetxController {
     update();
   }
 
-  addTeacher(bool bool) {}
+  addTeacher(bool bool) async {
+    statusRequest = StatusRequest.loading;
+    update();
+    if (formState.currentState!.validate() &&
+        name.text.isNotEmpty &&
+        phone.text.isNotEmpty &&
+        password.text.isNotEmpty &&
+        subject.text.isNotEmpty) {
+      try {
+        if (await checkInternet()) {
+          var response = await teacherListData.teacherAddData(
+            teacher_name: name.text,
+            teacher_phone: phone.text,
+            teacher_password: password.text,
+            subject_id: subject.text,
+          );
+          statusRequest = handlingData(response);
+          print('response');
+          print(response);
+          if (statusRequest == StatusRequest.success) {
+            if (response['status'] == 'success') {
+              Get.back();
+              await getTeachersList();
+            } else {
+              Get.snackbar(tr(response['message']), "");
+            }
+          }
+        } else {
+          Get.snackbar(tr('connectionError'), "");
+        }
+      } catch (e) {
+        Get.snackbar(tr('empty'), "");
+        print('addTeacher catch $e');
+      }
+      statusRequest = StatusRequest.success;
+      update();
+    } else {
+      Get.snackbar(tr('empty'), "");
+    }
 
+    statusRequest = StatusRequest.success;
+    update();
+  }
+
+  deleteTeacher(String teacherId) async {
+    print('deleteTeacher');
+    statusRequest = StatusRequest.loading;
+    update();
+    try {
+      var response =
+          await teacherListData.deleteStudentLessonData(teacherId: teacherId);
+      statusRequest = handlingData(response);
+      print(response);
+
+      if (statusRequest == StatusRequest.success) {
+        if (response['status'] == 'success') {
+          Get.snackbar(tr('successfulDelete'), "");
+          await getTeachersList();
+        }
+      } else {
+        Get.snackbar(tr('connectionError'), "");
+      }
+    } catch (e) {
+      print('deleteTeacher catch $e');
+    }
+
+    statusRequest = StatusRequest.success;
+    update();
+  }
 }
